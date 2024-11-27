@@ -7,6 +7,18 @@ url = f"https://www.google.com/search?q={coin}+price"
 
 
 def get_data():
+    """
+    Envia um registro para um Delivery Stream do Kinesis Firehose.
+
+    Args:
+        delivery_stream_name (str): O nome do Delivery Stream.
+        records (dict): O dado a ser enviado como um JSON.
+
+    Returns:
+        price (float), currency (str)
+        price: Valor do Bitcoin cotado no momento
+        currency: Moeda base para comparação monetária
+    """
     try:
         response = requests.get(url)
     except:
@@ -24,10 +36,10 @@ def get_data():
     ).split(" ")
 
     price = infos[0]
-    moeda_parametro = infos[1]
+    currency = infos[1]
 
     price = float(price.replace(".", "").replace(",", "."))
 
-    print(f"O preço é: {price}, e a moeda é:  {moeda_parametro}")
+    print(f"O preço é: {price}, e a moeda é:  {currency}")
 
-    return price, moeda_parametro
+    return price, currency
