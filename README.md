@@ -20,7 +20,7 @@ WIP
 ## Setup de Ambiente
 
 1. Realize o clone do repositório:
-  > git clone https://github.com/VictorJSSantos/Web.git](https://github.com/VictorJSSantos/Bitcoin-Stream-ETL.git)
+  > git clone https://github.com/VictorJSSantos/Bitcoin-Stream-ETL.git
 
 2. Recomendado:: Crie o ambiente virtual: 
   > python -m venv venv
