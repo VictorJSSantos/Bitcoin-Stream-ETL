@@ -1,19 +1,26 @@
 import boto3
-import os
 import json
+import os
+import logging
+
+# Configuração básica do logger
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
 def put_record_to_firehose(delivery_stream_name, records):
     """
     Envia um registro para um Delivery Stream do Kinesis Firehose.
 
-    Args:
-        delivery_stream_name (str): O nome do Delivery Stream.
-        records (dict): O dado a ser enviado como um JSON.
+    :param delivery_stream_name (str): O nome do Delivery Stream.
+    :param records (dict): O dado a ser enviado como um JSON.
 
     Returns:
         dict: Resposta da AWS para a solicitação.
     """
+
     # Inicializa o cliente do Firehose
     firehose_client = boto3.client(
         "firehose",
@@ -30,8 +37,8 @@ def put_record_to_firehose(delivery_stream_name, records):
         response = firehose_client.put_record(
             DeliveryStreamName=delivery_stream_name, Record=data
         )
-        print(f"Registro enviado com sucesso: {response}")
+        logger.info(f"Registro enviado com sucesso: {response}")
         return response
     except Exception as e:
-        print(f"Erro ao enviar o registro: {e}")
+        logger.error(f"Erro ao enviar o registro: {e}", exc_info=True)
         raise

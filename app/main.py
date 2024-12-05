@@ -11,12 +11,12 @@ while True:
     hora = datetime.now()
     hora = hora.strftime("%Y-%m-%d %H:%M:%S")
     delivery_stream_name = "PUT-S3-btc-etl-2"
-    print(price, currency, hora)
+    # print(price, currency, hora)
     records = {"price": price, "currency": currency, "time": hora}
     # Envia o dado para o Firehose
     response = put_record_to_firehose(delivery_stream_name, records)
-    print(response)
-    time.sleep(10)
+    # print(response)
+    time.sleep(1)
 
     # Implementando condição de saída do loop While arbitrariamente.
     i += 1
