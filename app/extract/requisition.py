@@ -9,35 +9,26 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-coin = "bitcoin"
-url = f"https://www.google.com/search?q={coin}+price"
+url = f"https://api.coindesk.com/v1/bpi/currentprice.json"
+headers = {
+    "Content-Type": "application/json",
+}
 
 
 def get_data():
     """
-    Envia um registro para um Delivery Stream do Kinesis Firehose.
-
-
-    :param delivery_stream_name (str): O nome do Delivery Stream.
-    :param records (dict): O dado a ser enviado como um JSON.
+    Sends a request to the Coindesk API to get bitcoin price
+    compared to the USD value.
 
     Returns:
-        price (float): Valor do Bitcoin cotado no momento
-        currency (str): Moeda base para comparação monetária
+        price (float): Bitcoin price in comparison to USD price.
+        currency (str): Currency that is being compared to.
     """
     try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, "html.parser")
-        # Lendo o soup temos essa parte a seguir de interessante para o nosso web scrapper:
-        # <div><div><div><div class="BNeawe iBp4i AP7Wnd"><div><div class="BNeawe iBp4i AP7Wnd">552.390,72 Real brasileiro</div></div></div></div></div>
-        infos = (
-            soup.find("div", attrs={"class": "BNeawe iBp4i AP7Wnd"})
-            .find("div", attrs={"class": "BNeawe iBp4i AP7Wnd"})
-            .text
-        ).split(" ")
-        price = infos[0]
-        currency = infos[1]
-        price = float(price.replace(".", "").replace(",", "."))
+        response = requests.get(url, headers=headers)
+        response = response.json()
+        currency = response["bpi"]["USD"]["code"]
+        price = response["bpi"]["USD"]["rate_float"]
         return price, currency
     except Exception as e:
         logger.error(

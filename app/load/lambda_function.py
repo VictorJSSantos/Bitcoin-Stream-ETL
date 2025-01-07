@@ -42,13 +42,11 @@ def process_sqs_messages(event):
     """
     for record in event.get("Records", []):
         try:
-            # Obter o corpo da mensagem
+            # Obter o corpo da mensagem do SQS
             message_body = json.loads(record["body"])
 
-            # Extrair informações do arquivo
-            file_key = message_body[
-                "key"
-            ]  # Supondo que a mensagem contém {"key": "2024/12/04/21/...json"}
+            # Extrair a chave do arquivo do evento S3
+            file_key = message_body["Records"][0]["s3"]["object"]["key"]
             logger.info(f"Processando arquivo: {file_key}")
 
             # Copiar o arquivo para o bucket de backup

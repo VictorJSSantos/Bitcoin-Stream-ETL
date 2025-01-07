@@ -37,7 +37,9 @@ def put_record_to_firehose(delivery_stream_name, records):
         response = firehose_client.put_record(
             DeliveryStreamName=delivery_stream_name, Record=data
         )
-        logger.info(f"Registro enviado com sucesso: {response}")
+        logger.info(
+            f"Registro enviado com sucesso: {response['ResponseMetadata']['HTTPStatusCode']}"
+        )
         return response
     except Exception as e:
         logger.error(f"Erro ao enviar o registro: {e}", exc_info=True)
