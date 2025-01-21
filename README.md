@@ -26,7 +26,15 @@ Este projeto tinha como objetivo a utilização de ferramentas da nuvem AWS como
 
 ## Diretórios do projeto
 
-WIP
+A estrutura deste projeto é bem simples:
+
+- app - pasta principal da aplicação;
+  - extract - pasta da aplicação separada para o contexto de extração de dados;
+    - extract.py - arquivo que irá fazer as requisições à API da Coinbase e que contém a lógica de extração e armazenagem dos arquivos em parquet;
+  - load - pasta da aplicação separada para o contexto de load na nuvem AWS;
+    - FireHose_load.py - arquivo que irá fazer o load dos arquivos gerados na extração para a nuvem AWS através do Firehose;
+    - lambda_function.py - arquivo da função lambda que foi registrada na AWS para processar as mensagens do AWS SQS;
+  - main.py - arquivo que irá rodar a aplicação como um todo;
 
 ## Pré-requisitos
 
