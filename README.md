@@ -10,6 +10,7 @@ O projeto é um pipeline de dados de coleta, armazenagem e tratamento do valor d
 * Por fim, na parte de Analytics, todos os dados ingeridos estão disponibilizados e visíveis no AWS Athena;
 
 Este projeto é parte da entrega do Tech Challenge da FIAP do curso de pós-graduação em Machine Learning Engineering, feito pelo grupo composto pelos seguintes integrantes:
+* Alexandro Barros
 * Janis Silva
 * Tatiana Haddad
 * Victor Santos
