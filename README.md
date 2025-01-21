@@ -2,11 +2,27 @@
 
 ## Descrição
 
-WIP
+Esse projeto tem o intuito de utilizar ferramentas near real-time (quase tempo real) na nuvem da AWS para fazer a ingestão de dados com uma frequência alta, por isso utilizaremos nesse projeto uma stack específica (por exemplo Firehose) e também soluções específicas para que possamos adaptar as ferramentas às necessidades do projeto.
+O projeto é um pipeline de dados de coleta, armazenagem e tratamento do valor do preço de bitcoin. Dividiremos em algumas etapas, como descrevemos a seguir:
+* Na extração utilizaremos a API da Coinbase para consultar os valores do bitcoin, uma vez que ela tem um tier de uso grátis com até 15 mil requisições por dia, o que será mais que suficiente para nosso projeto;
+* Na parte de ingestão destes dados utilizaremos o AWS Firehose, que irá nos ajudar a fazer a ingestão dos dados que irão ser coletados a cada 1s para podermos armazená-los num bucket S3 onde armazenaremos os arquivos "raw" ou onde seria a camada bronze.
+* Na parte de tratamento/trasformação, a cada entrada de arquivo no bucket S3 raw, o próprio bucket S3 raw irá disparar uma mensagem no AWS SQS para uma fila específica de entrada destes arquivos. Esta fila, ao entrar uma quantidade de mensagens (ou arquivos recebidos no S3 raw), irá acionar uma função Lambda que irá acessar as mensagens e tratar para poder identificar as keys e buckets dos arquivos referenciados nas mensagens e, com issso, realizará a cópia destes arquivos para um segundo bucket S3 de backup.
+* Por fim, na parte de Analytics, todos os dados ingeridos estão disponibilizados e visíveis no AWS Athena;
+
+Este projeto é parte da entrega do Tech Challenge da FIAP do curso de pós-graduação em Machine Learning Engineering, feito pelo grupo composto pelos seguintes integrantes:
+* Janis Silva
+* Tatiana Haddad
+* Victor Santos
 
 ## Objetivos
 
-WIP
+Este projeto tinha como objetivo a utilização de ferramentas da nuvem AWS como o Firehose, SQS, Lambda, S3 e Athena. Os principais entregáveis eram os seguintes:
+* Realização de webscrapping;
+* Utilização do AWS Firehose para ingestão de dados;
+* Utilização de filas no AWS SQS;
+* Utilização de funções Lambda para ler eventos registrados no AWS SQS e realizar processamento serverless;
+* Utilização de buckets S3 e configurações de gatilhos para automação;
+* Fornecer visualizações dos dados ingeridos no AWS Athena.
 
 ## Diretórios do projeto
 
